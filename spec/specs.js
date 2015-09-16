@@ -47,3 +47,11 @@ describe('check for 1', function() {
       expect(testPlayer.tempScore).to.equal(0);
     });
 });
+
+describe('check for win', function() {
+    it('player wins if permscore is greater than or equal to 100', function() {
+      var testPlayer = new Player(permScore, tempScore)
+      testPlayer.permScore = 100;
+      expect(testPlayer.checkForWin()).to.equal("You win!");
+    });
+});

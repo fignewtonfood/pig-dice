@@ -32,6 +32,12 @@ Player.prototype.checkForOne = function(){
   }
 }
 
+Player.prototype.checkForWin = function(){
+  if (this.permScore >= 100) {
+    return "You win!";
+  }
+}
+
 
 // function resetScore() {
 //     $("input.new-street").last().val("");
