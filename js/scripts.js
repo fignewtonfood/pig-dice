@@ -25,6 +25,7 @@ Player.prototype.rollAgain = function() {
 
 Player.prototype.stopRolling = function(){
     this.permScore += this.tempScore;
+    this.tempScore = 0;
     switchPlayer();
     return this.permScore;
 }
@@ -43,7 +44,7 @@ Player.prototype.checkForWin = function(){
 }
 
 function switchPlayer(){
-    if (currentP == 0) {
+    if (playerBit == 0) {
         playerBit = 1;
     } else {
         playerBit = 0;
@@ -70,13 +71,16 @@ $(document).ready(function(){
     });
 //button p1hit
     $("button#p1hit").click(function(event){
-        rollAgain();
-        $('#tempScore').text(tempScore)
-        roll, add rollResult to tempScore,
+        playerOne.rollAgain();
+        $("#roll").text(rollResult);
+        $('#tempScore').text(playerOne.tempScore)
+        //roll, add rollResult to tempScore,
     });
 //button p1 pass
     $("button#p1pass").click(function(event){
-        addd tempScore to player score, switch players
+        playerOne.stopRolling();
+        $('#tempScore').text(playerOne.tempScore)
+        $('#p1score').text(playerOne.permScore)
+        //add tempScore to player score, switch players
     });
-
 });
