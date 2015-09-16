@@ -5,40 +5,41 @@ var playerBit = 0;
 
 //dice roller
 function roll() {
-  rollResult = Math.floor(Math.random() * (6)) + 1;
-  return rollResult;
+    rollResult = Math.floor(Math.random() * (6)) + 1;
+    return rollResult;
 }
 
 function Player(playerId, permScore, tempScore){
-  tempScore = 0;
-  permScore = 0;
-  this.playerId = playerId;
-  this.permScore = permScore;
-  this.tempScore = tempScore;
+    tempScore = 0;
+    permScore = 0;
+    this.playerId = playerId;
+    this.permScore = permScore;
+    this.tempScore = tempScore;
 }
 
 Player.prototype.rollAgain = function() {
-  this.tempScore += rollResult;
-  return this.tempScore;
+    roll();
+    this.tempScore += rollResult;
+    return this.tempScore;
 }
 
 Player.prototype.stopRolling = function(){
-  this.permScore += this.tempScore;
-  switchPlayer();
-  return this.permScore;
+    this.permScore += this.tempScore;
+    switchPlayer();
+    return this.permScore;
 }
 
 Player.prototype.checkForOne = function(){
-  if (rollResult == 1) {
-    this.tempScore = 0;
-    this.stopRolling();
-  }
+    if (rollResult == 1) {
+        this.tempScore = 0;
+        this.stopRolling();
+    }
 }
 
 Player.prototype.checkForWin = function(){
-  if (this.permScore >= 100) {
-    return "You win!";
-  }
+    if (this.permScore >= 100) {
+        return "You win!";
+    }
 }
 
 function switchPlayer(){
@@ -63,8 +64,19 @@ $(document).ready(function(){
         //$("#tempScore").text(this.tempScore)
         $("#roll").text(rollResult);
     });
-
+//button to show playfield
     $("button.playerselection").click(function(){
         $("#game").show();
     });
+//button p1hit
+    $("button#p1hit").click(function(event){
+        rollAgain();
+        $('#tempScore').text(tempScore)
+        roll, add rollResult to tempScore,
+    });
+//button p1 pass
+    $("button#p1pass").click(function(event){
+        addd tempScore to player score, switch players
+    });
+
 });
