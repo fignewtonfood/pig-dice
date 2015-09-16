@@ -19,21 +19,37 @@ function Player(playerId, permScore, tempScore){
 
 Player.prototype.rollAgain = function() {
     roll();
-    this.tempScore += rollResult;
-    return this.tempScore;
+    if (rollResult == 1) {
+        this.stopRolling;
+    } else {
+        this.tempScore += rollResult;
+        return this.tempScore;
+    }
 }
 
 Player.prototype.stopRolling = function(){
-    this.permScore += this.tempScore;
-    this.tempScore = 0;
-    switchPlayer();
-    return this.permScore;
+    if (playerBit == 0) {
+        playerOne.permScore += playerOne.tempScore;
+        playerOne.tempScore = 0;
+        switchPlayer();
+        return playerOne.permScore;
+    } else {
+        playerTwo.permScore += playerTwo.tempScore;
+        playerTwo.tempScore = 0;
+        switchPlayer();
+        return playerTwo.permScore;
+    }
 }
 
 Player.prototype.checkForOne = function(){
     if (rollResult == 1) {
-        this.tempScore = 0;
-        this.stopRolling();
+        if (playerBit == 0) {
+            playerOne.tempScore = 0;
+            playerOne.stopRolling();
+        } else {
+            playerTwo.tempScore = 0;
+            playerTwo.stopRolling();
+        }
     }
 }
 
@@ -46,8 +62,12 @@ Player.prototype.checkForWin = function(){
 function switchPlayer(){
     if (playerBit == 0) {
         playerBit = 1;
+        $("#playerOneButtons").hide();
+        $("#playerTwoButtons").show();
     } else {
         playerBit = 0;
+        $("#playerTwoButtons").hide();
+        $("#playerOneButtons").show();
     }
 }
 
@@ -56,6 +76,7 @@ function switchPlayer(){
 $(document).ready(function(){
     var playerOne = new Player (1, permScore, tempScore);
     var playerTwo = new Player (2, permScore, tempScore);
+    var playerNumber = [playerOne, playerTwo];
     var playerType = playerTwo.playerId;
     $("button#two-player").click(function(event){
         event.preventDefault();
@@ -73,6 +94,7 @@ $(document).ready(function(){
 
     $("button#p1hit").click(function(event){
         playerOne.rollAgain();
+        playerOne.checkForOne();
         $("#roll").text(rollResult);
         $('#tempScore').text(playerOne.tempScore)
         //roll, add rollResult to tempScore,
@@ -82,8 +104,8 @@ $(document).ready(function(){
         playerOne.stopRolling();
         $('#tempScore').text(playerOne.tempScore)
         $('#p1score').text(playerOne.permScore)
-        $("#playerOneButtons").hide();
-        $("#playerTwoButtons").show();
+        // $("#playerOneButtons").hide();
+        // $("#playerTwoButtons").show();
         //add tempScore to player score, switch players
     });
 
@@ -97,7 +119,7 @@ $(document).ready(function(){
         playerTwo.stopRolling();
         $('#tempScore').text(playerTwo.tempScore)
         $('#p2score').text(playerTwo.permScore)
-        $("#playerTwoButtons").hide();
-        $("#playerOneButtons").show();
+        // $("#playerTwoButtons").hide();
+        // $("#playerOneButtons").show();
     });
 });
