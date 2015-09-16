@@ -21,14 +21,16 @@
                 </div>
             </div>
         </div>
-        
+
 <!-- Container for playfield -->
         <div class="container" id="game">
             <div class="col-md-4">
                 <h2>Player 1</h2>
                 <span id='p1score' class='permscore'></span>
-                <button type="submit" class="hit" id='p1hit'>Hit!</button>
-                <button type="submit" class="pass" id='p1pass'>Pass!</button>
+                <div id="playerOneButtons">
+                    <button type="submit" class="hit" id='p1hit'>Hit!</button>
+                    <button type="submit" class="pass" id='p1pass'>Pass!</button>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="container">
@@ -43,8 +45,10 @@
             <div class="col-md-4">
                 <h2>Player 2</h2>
                 <span id='p2score' class='permscore'></span>
-                <button type="submit" class="hit" id='p2hit'>Hit!</button>
-                <button type="submit" class="pass" id='p2pass'>Pass!</button>
+                <div id="playerTwoButtons">
+                    <button type="submit" class="hit" id='p2hit'>Hit!</button>
+                    <button type="submit" class="pass" id='p2pass'>Pass!</button>
+                </div>
             </div>
         </div>
     </body>

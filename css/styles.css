@@ -1,3 +1,7 @@
- #game {
+#game {
+    display: none;
+}
+
+#playerTwoButtons {
     display: none;
 }

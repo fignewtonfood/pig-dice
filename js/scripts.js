@@ -70,6 +70,7 @@ $(document).ready(function(){
         $("#game").show();
     });
 //button p1hit
+
     $("button#p1hit").click(function(event){
         playerOne.rollAgain();
         $("#roll").text(rollResult);
@@ -81,6 +82,22 @@ $(document).ready(function(){
         playerOne.stopRolling();
         $('#tempScore').text(playerOne.tempScore)
         $('#p1score').text(playerOne.permScore)
+        $("#playerOneButtons").hide();
+        $("#playerTwoButtons").show();
         //add tempScore to player score, switch players
+    });
+
+    $("button#p2hit").click(function(event){
+        playerTwo.rollAgain();
+        $("#roll").text(rollResult);
+        $('#tempScore').text(playerTwo.tempScore)
+    });
+
+    $("button#p2pass").click(function(event){
+        playerTwo.stopRolling();
+        $('#tempScore').text(playerTwo.tempScore)
+        $('#p2score').text(playerTwo.permScore)
+        $("#playerTwoButtons").hide();
+        $("#playerOneButtons").show();
     });
 });
