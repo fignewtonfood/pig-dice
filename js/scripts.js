@@ -20,7 +20,8 @@ function Player(playerId, permScore, tempScore){
 Player.prototype.rollAgain = function() {
     roll();
     if (rollResult == 1) {
-        this.stopRolling;
+        this.tempScore=0;
+        this.stopRolling();
     } else {
         this.tempScore += rollResult;
         return this.tempScore;
@@ -28,30 +29,34 @@ Player.prototype.rollAgain = function() {
 }
 
 Player.prototype.stopRolling = function(){
-    if (playerBit == 0) {
-        playerOne.permScore += playerOne.tempScore;
-        playerOne.tempScore = 0;
-        switchPlayer();
-        return playerOne.permScore;
-    } else {
-        playerTwo.permScore += playerTwo.tempScore;
-        playerTwo.tempScore = 0;
-        switchPlayer();
-        return playerTwo.permScore;
-    }
+    this.permScore += this.tempScore;
+    this.tempScore = 0;
+    switchPlayer();
+    return this.permScore;
+    // if (playerBit == 0) {
+    //     playerOne.permScore += playerOne.tempScore;
+    //     playerOne.tempScore = 0;
+    //     switchPlayer();
+    //     return playerOne.permScore;
+    // } else {
+    //     playerTwo.permScore += playerTwo.tempScore;
+    //     playerTwo.tempScore = 0;
+    //     switchPlayer();
+    //     return playerTwo.permScore;
+    // }
 }
 
-Player.prototype.checkForOne = function(){
-    if (rollResult == 1) {
-        if (playerBit == 0) {
-            playerOne.tempScore = 0;
-            playerOne.stopRolling();
-        } else {
-            playerTwo.tempScore = 0;
-            playerTwo.stopRolling();
-        }
-    }
-}
+// Player.prototype.checkForOne = function(){
+//     if (rollResult == 1) {
+//         if (playerBit == 0) {
+//             playerOne.tempScore = 0;
+//             playerOne.stopRolling();
+//         } else {
+//             playerTwo.tempScore = 0;
+//             playerTwo.stopRolling();
+//         }
+//     }
+// }
 
 Player.prototype.checkForWin = function(){
     if (this.permScore >= 100) {
@@ -94,7 +99,7 @@ $(document).ready(function(){
 
     $("button#p1hit").click(function(event){
         playerOne.rollAgain();
-        playerOne.checkForOne();
+        // playerOne.checkForOne();
         $("#roll").text(rollResult);
         $('#tempScore').text(playerOne.tempScore)
         //roll, add rollResult to tempScore,
