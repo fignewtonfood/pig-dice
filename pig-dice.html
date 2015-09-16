@@ -4,9 +4,45 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css">
         <script src="js/jquery-1.11.3.js"></script>
         <script src="js/scripts.js"></script>
-        <title></title>
+        <title>Pig Dice</title>
     </head>
     <body>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" class = "playerselection" id='two-player'>PvP</button>
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class = "playerselection" id='easycomp'>Easy</button>
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class = "playerselection" id='hardcomp'>Hard</button>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="game">
+            <div class="col-md-4">
+                <h2>Player 1</h2>
+                <span id='p1score' class='permscore'></span>
+                <button type="submit" class="hit" id='p1hit'>Hit!</button>
+                <button type="submit" class="pass" id='p1pass'>Pass!</button>
+            </div>
+            <div class="col-md-4">
+                <div class="container">
+                    <span id='tempScore'></span>
+                    <h3>Temp Score</h3>
+                </div>
+                <div class="container">
+                    <span id='roll'></span>
+                    <h3>Roll</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2>Player 2</h2>
+                <span id='p2score' class='permscore'></span>
+                <button type="submit" class="hit" id='p2hit'>Hit!</button>
+                <button type="submit" class="pass" id='p2pass'>Pass!</button>
+            </div>
+        </div>
     </body>
 </html>
