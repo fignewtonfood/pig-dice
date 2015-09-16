@@ -1,11 +1,39 @@
+var tempScore = 0;
+var permScore = 0;
+var rollResult = 0;
+
 //dice roller
 function roll() {
-  return Math.floor(Math.random() * (6)) + 1;
-};
+  rollResult = Math.floor(Math.random() * (6)) + 1;
+  return rollResult;
+}
 
-var tempScore = 0;
+function Player(permScore, tempScore){
+  tempScore = 0;
+  permScore = 0;
+  this.permScore = permScore;
+  this.tempScore = tempScore;
+}
 
-function addToTempScore() {
-  var rollResult = roll();
-  tempScore += rollResult;
-};
+Player.prototype.rollAgain = function() {
+  this.tempScore += rollResult;
+  return this.tempScore;
+}
+
+Player.prototype.stopRolling = function(){
+  this.permScore += this.tempScore;
+  return this.permScore;
+}
+
+Player.prototype.checkForOne = function(){
+  if (rollResult == 1) {
+    this.tempScore = 0;
+    this.stopRolling();
+  }
+}
+
+
+// function resetScore() {
+//     $("input.new-street").last().val("");
+//     $("input.new-city").last().val("");
+// }
