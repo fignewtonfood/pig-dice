@@ -5,3 +5,15 @@
 #playerTwoButtons {
     display: none;
 }
+
+#playerOneWins {
+    display: none;
+}
+
+#playerTwoWins {
+    display: none;
+}
+
+#moves {
+    display: none;
+}

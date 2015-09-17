@@ -2,6 +2,8 @@ var tempScore = 0;
 var permScore = 0;
 var rollResult = 0;
 var playerBit = 0;
+var playerMove = 0;
+var printMove;
 
 //dice roller
 function roll() {
@@ -22,24 +24,26 @@ Player.prototype.rollAgain = function() {
     if (rollResult == 1) {
         this.tempScore=0;
         this.stopRolling();
+        playerMove = 3;
+        printOutput();
     } else {
         this.tempScore += rollResult;
+        playerMove = 1;
+        printOutput();
         return this.tempScore;
     }
 }
 
 Player.prototype.stopRolling = function(){
     this.permScore += this.tempScore;
+    playerMove = 2;
+    printOutput;
     this.tempScore = 0;
     if (this.permScore >= 100) {
         if (this.playerId == 1) {
-            if (confirm ("Player 1 wins... Play again?") == true) {
-                location.reload(true);
-            }
+            $("#playerOneWins").show();
         } else {
-            if (confirm ("Player 2 wins... Play again?") == true) {
-                location.reload(true);
-            }
+            $("#playerTwoWins").show();
         }
     } else {
         switchToPlayer();
@@ -74,27 +78,92 @@ Player.prototype.stopRolling = function(){
 //     }
 // }
 
+function printOutput(){
+    if (playerType >= 3) {
+        if (playerMove == 1) {
+            printMove = "rolled again and rolled a " + rollResult + ".";
+        } else if (playerMove == 2) {
+            printMove = "decided to pass and earned " + tempScore + "points!";
+        } else if (playerMove == 3) {
+            printMove = "rolled a one and now it's your turn!";
+        }
+        $("#moves").show();
+        showOutput();
+    }
+}
+
+function showOutput(){
+    $("ul#move-list").append("<li class='list-item'>Player Two " + printMove + "</li>");
+}
+
+
 function computerLogic(){
     if (playerType == 3) {
-        while (playerTwo.tempScore<= 10) {
+        while ((playerTwo.tempScore<= 10) && playerBit == 1) {
             playerTwo.rollAgain();
         }
-        playerTwo.stopRolling();
+        if (playerBit == 1) {
+            playerTwo.stopRolling();
+        }
     } else {
-//hard computer
+        if (playerTwo.permScore == 0 ) {
+            while ((playerTwo.tempScore < 21) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        } else if (playerTwo.permScore - playerOne.permScore > 40){
+            while ((playerTwo.tempScore < 10) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        } else if (playerTwo.permScore - playerOne.permScore > 20){
+            while ((playerTwo.tempScore < 15) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        } else if (playerTwo.permScore - playerOne.permScore > 0){
+            while ((playerTwo.tempScore < 21) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        } else if (playerTwo.permScore - playerOne.permScore > -20){
+            while ((playerTwo.tempScore < 25) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        } else if (playerTwo.permScore - playerOne.permScore > -40){
+            while ((playerTwo.tempScore < 30) && playerBit == 1) {
+                playerTwo.rollAgain();
+            }
+            if (playerBit == 1) {
+                playerTwo.stopRolling();
+            }
+        }
     }
 }
 
 
 function switchToPlayer(){
-    if (playerType == 3) {
+    if (playerType >= 3) {
         if (playerBit == 0) {
             playerBit = 1;
             $("#playerOneButtons").hide();
             $("#playerTwoButtons").show();
+            $(".list-item").remove();
             computerLogic();
         } else {
             playerBit = 0;
+
             $("#playerTwoButtons").hide();
             $("#playerOneButtons").show();
         }
@@ -111,13 +180,18 @@ function switchToPlayer(){
     }
 }
 
+
+
+
+
 //Global variable required to determine whether player was human
 var playerType;
 var playerTwo;
+var playerOne;
 
 //jQuery
 $(document).ready(function(){
-    var playerOne = new Player (1, permScore, tempScore);
+    playerOne = new Player (1, permScore, tempScore);
     playerTwo = new Player (2, permScore, tempScore);
     // var playerNumber = [playerOne, playerTwo];
 
@@ -126,6 +200,7 @@ $(document).ready(function(){
         $("#p1score").text(playerOne.permScore);
         $("#p2score").text(playerTwo.permScore);
         $("#roll").text(rollResult);
+        $("#gameSelect").hide();
     });
 
     $("button#easy-comp").click(function(event){
@@ -135,6 +210,22 @@ $(document).ready(function(){
         $("#p1score").text(playerOne.permScore);
         $("#p2score").text(playerTwo.permScore);
         $("#roll").text(rollResult);
+        $("#gameSelect").hide();
+    });
+
+    $("button#hard-comp").click(function(event){
+        event.preventDefault();
+        playerTwo.playerId = 4;
+        playerType = playerTwo.playerId;
+        $("#p1score").text(playerOne.permScore);
+        $("#p2score").text(playerTwo.permScore);
+        $("#roll").text(rollResult);
+        $("#gameSelect").hide();
+    });
+
+    $("button#play-again").click(function(event){
+        event.preventDefault();
+        location.reload();
     });
 
 //button to show playfield

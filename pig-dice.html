@@ -8,7 +8,7 @@
     </head>
     <body>
 <!-- Container for choosing gametype -->
-        <div class="container">
+        <div class="container" id = "gameSelect">
             <div class="row">
                 <div class="col-md-4">
                     <button type="submit" class = "playerselection" id='two-player'>PvP</button>
@@ -17,7 +17,7 @@
                   <button type="submit" class = "playerselection" id='easy-comp'>Easy</button>
                 </div>
                 <div class="col-md-4">
-                  <button type="submit" class = "playerselection" id='hardcomp'>Hard</button>
+                  <button type="submit" class = "playerselection" id='hard-comp'>Hard</button>
                 </div>
             </div>
         </div>
@@ -31,6 +31,10 @@
                     <button type="submit" class="hit" id='p1hit'>Hit!</button>
                     <button type="submit" class="pass" id='p1pass'>Pass!</button>
                 </div>
+                <div id="playerOneWins">
+                    <h1>Player 1 Wins</h1>
+                    <button type="submit" id='playagain'>Play again?</button>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="container">
@@ -41,6 +45,13 @@
                     <span id='roll'></span>
                     <h3>Roll</h3>
                 </div>
+                <div class="container">
+                    <div id="moves">
+                        <h3>Moves</h3>
+                        <ul id = "move-list">
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <h2>Player 2</h2>
@@ -48,6 +59,10 @@
                 <div id="playerTwoButtons">
                     <button type="submit" class="hit" id='p2hit'>Hit!</button>
                     <button type="submit" class="pass" id='p2pass'>Pass!</button>
+                </div>
+                <div id="playerTwoWins">
+                    <h1>Player 2 Wins</h1>
+                    <button type="submit" id='play-again'>Play again?</button>
                 </div>
             </div>
         </div>
