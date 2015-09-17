@@ -37,7 +37,7 @@ Player.prototype.rollAgain = function() {
 Player.prototype.stopRolling = function(){
     this.permScore += this.tempScore;
     playerMove = 2;
-    printOutput;
+    printOutput();
     this.tempScore = 0;
     if (this.permScore >= 100) {
         if (this.playerId == 1) {
@@ -83,7 +83,7 @@ function printOutput(){
         if (playerMove == 1) {
             printMove = "rolled again and rolled a " + rollResult + ".";
         } else if (playerMove == 2) {
-            printMove = "decided to pass and earned " + tempScore + "points!";
+            printMove = "decided to pass and earned " + playerTwo.tempScore + " points!";
         } else if (playerMove == 3) {
             printMove = "rolled a one and now it's your turn!";
         }
@@ -93,7 +93,7 @@ function printOutput(){
 }
 
 function showOutput(){
-    $("ul#move-list").append("<li class='list-item'>Player Two " + printMove + "</li>");
+    $("ul#move-list").append("<li class='list-item'>Player " + printMove + "</li>");
 }
 
 
@@ -166,6 +166,7 @@ function switchToPlayer(){
 
             $("#playerTwoButtons").hide();
             $("#playerOneButtons").show();
+
         }
     } else {
         if (playerBit == 0) {
@@ -181,6 +182,7 @@ function switchToPlayer(){
 }
 
 
+// function
 
 
 
@@ -241,6 +243,7 @@ $(document).ready(function(){
         $('#p1score').text(playerOne.permScore)
         $('#p2score').text(playerTwo.permScore)
         $("#roll").text(rollResult);
+        $(".list-item").remove();
         //roll, add rollResult to tempScore,
     });
 
