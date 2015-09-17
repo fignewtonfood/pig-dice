@@ -31,8 +31,20 @@ Player.prototype.rollAgain = function() {
 Player.prototype.stopRolling = function(){
     this.permScore += this.tempScore;
     this.tempScore = 0;
-    switchPlayer();
-    return this.permScore;
+    if (this.permScore >= 100) {
+        if (this.playerId == 1) {
+            if (confirm ("Player 1 wins... Play again?") == true) {
+                location.reload(true);
+            }
+        } else {
+            if (confirm ("Player 2 wins... Play again?") == true) {
+                location.reload(true);
+            }
+        }
+    } else {
+        switchPlayer();
+        return this.permScore;
+    }
     // if (playerBit == 0) {
     //     playerOne.permScore += playerOne.tempScore;
     //     playerOne.tempScore = 0;
