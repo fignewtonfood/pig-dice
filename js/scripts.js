@@ -42,101 +42,136 @@ Player.prototype.stopRolling = function(){
             }
         }
     } else {
-        switchPlayer();
+        switchToPlayer();
         return this.permScore;
     }
-    // if (playerBit == 0) {
-    //     playerOne.permScore += playerOne.tempScore;
-    //     playerOne.tempScore = 0;
-    //     switchPlayer();
-    //     return playerOne.permScore;
-    // } else {
-    //     playerTwo.permScore += playerTwo.tempScore;
-    //     playerTwo.tempScore = 0;
-    //     switchPlayer();
-    //     return playerTwo.permScore;
-    // }
 }
 
-// Player.prototype.checkForOne = function(){
-//     if (rollResult == 1) {
-//         if (playerBit == 0) {
-//             playerOne.tempScore = 0;
-//             playerOne.stopRolling();
-//         } else {
-//             playerTwo.tempScore = 0;
-//             playerTwo.stopRolling();
-//         }
+// Player.prototype.checkForWin = function(){
+//     if (this.permScore >= 100) {
+//         return "You win!";
 //     }
 // }
 
-Player.prototype.checkForWin = function(){
-    if (this.permScore >= 100) {
-        return "You win!";
-    }
-}
 
-function switchPlayer(){
-    if (playerBit == 0) {
-        playerBit = 1;
-        $("#playerOneButtons").hide();
-        $("#playerTwoButtons").show();
+// Player.prototype.switchPlayer = function(){
+//     if (this.playerId == 3) {
+//         $("#playerOneButtons").hide();
+//     } else {
+//         $("#playerOneButtons").show();
+//     }
+// }
+
+// function switchToComputer(){
+//     if (playerBit == 0) {
+//         playerBit = 1;
+//         // $("#playerOneButtons").hide();
+//         // $("#playerTwoButtons").show();
+//     } else {
+//         playerBit = 0;
+//         // $("#playerTwoButtons").hide();
+//         // $("#playerOneButtons").show();
+//     }
+// }
+
+function computerLogic(){
+    if (playerType == 3) {
+        while (playerTwo.tempScore<= 10) {
+            playerTwo.rollAgain();
+        }
+        playerTwo.stopRolling();
     } else {
-        playerBit = 0;
-        $("#playerTwoButtons").hide();
-        $("#playerOneButtons").show();
+//hard computer
     }
 }
 
+
+function switchToPlayer(){
+    if (playerType == 3) {
+        if (playerBit == 0) {
+            playerBit = 1;
+            $("#playerOneButtons").hide();
+            $("#playerTwoButtons").show();
+            computerLogic();
+        } else {
+            playerBit = 0;
+            $("#playerTwoButtons").hide();
+            $("#playerOneButtons").show();
+        }
+    } else {
+        if (playerBit == 0) {
+            playerBit = 1;
+            $("#playerOneButtons").hide();
+            $("#playerTwoButtons").show();
+        } else {
+            playerBit = 0;
+            $("#playerTwoButtons").hide();
+            $("#playerOneButtons").show();
+        }
+    }
+}
+
+//Global variable required to determine whether player was human
+var playerType;
+var playerTwo;
 
 //jQuery
 $(document).ready(function(){
     var playerOne = new Player (1, permScore, tempScore);
-    var playerTwo = new Player (2, permScore, tempScore);
-    var playerNumber = [playerOne, playerTwo];
-    var playerType = playerTwo.playerId;
+    playerTwo = new Player (2, permScore, tempScore);
+    // var playerNumber = [playerOne, playerTwo];
+
     $("button#two-player").click(function(event){
         event.preventDefault();
         $("#p1score").text(playerOne.permScore);
         $("#p2score").text(playerTwo.permScore);
-        //print temp score of current player
-        //$("#tempScore").text(this.tempScore)
         $("#roll").text(rollResult);
     });
+
+    $("button#easy-comp").click(function(event){
+        event.preventDefault();
+        playerTwo.playerId = 3;
+        playerType = playerTwo.playerId;
+        $("#p1score").text(playerOne.permScore);
+        $("#p2score").text(playerTwo.permScore);
+        $("#roll").text(rollResult);
+    });
+
 //button to show playfield
     $("button.playerselection").click(function(){
         $("#game").show();
     });
-//button p1hit
 
+//button p1hit
     $("button#p1hit").click(function(event){
         playerOne.rollAgain();
         // playerOne.checkForOne();
-        $("#roll").text(rollResult);
         $('#tempScore').text(playerOne.tempScore)
+        $('#p1score').text(playerOne.permScore)
+        $('#p2score').text(playerTwo.permScore)
+        $("#roll").text(rollResult);
         //roll, add rollResult to tempScore,
     });
+
 //button p1 pass
     $("button#p1pass").click(function(event){
         playerOne.stopRolling();
         $('#tempScore').text(playerOne.tempScore)
         $('#p1score').text(playerOne.permScore)
-        // $("#playerOneButtons").hide();
-        // $("#playerTwoButtons").show();
-        //add tempScore to player score, switch players
+        $('#p2score').text(playerTwo.permScore)
+        $("#roll").text(rollResult);
     });
 
     $("button#p2hit").click(function(event){
         playerTwo.rollAgain();
         $("#roll").text(rollResult);
         $('#tempScore').text(playerTwo.tempScore)
+        $('#p2score').text(playerTwo.permScore)
     });
 
     $("button#p2pass").click(function(event){
         playerTwo.stopRolling();
         $('#tempScore').text(playerTwo.tempScore)
         $('#p2score').text(playerTwo.permScore)
-        // $("#playerTwoButtons").hide();
-        // $("#playerOneButtons").show();
     });
 });
